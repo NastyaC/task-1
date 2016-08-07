@@ -11,3 +11,7 @@ th {
   background-color: #4CAF50;
   color: white;
 }
+button{
+  float: right;
+  margin-top: 20px;
+}

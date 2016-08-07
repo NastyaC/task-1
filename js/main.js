@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var editInput =  document.createElement('input'),
       inputValue = '',
       sortedClass = 'sorted',
+      deleteBtn = document.getElementsByClassName('delete'),
       ths = Array.prototype.slice.call(document.getElementsByTagName('th')),
       tableData = document.getElementsByTagName('tbody').item(0),
       rowData = tableData.getElementsByTagName('tr'),
@@ -19,8 +20,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
         return false;
       },
+      removeRow = function (elements) {
+        var i = elements.length; 
+
+        while (i--) {
+
+          if(elements[i].getElementsByTagName('input')[0].checked) {
+            elements[i].parentNode.removeChild(elements[i]);
+          }
+
+        }
+
+        return false;
+      },
       sortArray = function (a, b) {
-        var nameA=a[0].toLowerCase(), nameB=b[0].toLowerCase();
+        var nameA = a[0].toLowerCase(),
+            nameB = b[0].toLowerCase();
 
         if (nameA < nameB) return -1;
 
@@ -32,13 +47,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
         var store = [],
             i,
             row,
-            sortnr;
+            sortTr;
 
-        for (i = 0, len = tableData.rows.length; i < len; i++) {
+        for (i = 0; i < tableData.rows.length; i++) {
           row = tableData.rows[i];
-          sortnr = row.cells[ths.indexOf(element)].innerText;
-          store.push([sortnr, row]);
+          sortTr = row.cells[ths.indexOf(element)].innerText;
+          store.push([sortTr, row]);
         }
+
+        store.sort(sortArray);
 
         if (hasClass(ths, sortedClass)) {
           removeClass(ths);
@@ -46,10 +63,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
         } else {
           removeClass(ths);
           element.setAttribute('class', sortedClass);
-          store.sort(sortArray);
         }
 
-        for (i = 0, len = store.length; i < len; i++) {
+        for (i = 0; i < store.length; i++) {
           tableData.appendChild(store[i][1]);
         }
 
@@ -83,5 +99,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     if (curElement.tagName.toLowerCase() === 'th') {
       sortTable(curElement);
     };
+  });
+
+  document.getElementsByTagName('button')[0].addEventListener('click', function(){
+    removeRow(rowData);
   });
 });
