@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var editInput =  document.createElement('input'),
       inputValue = '',
       sortedClass = 'sorted',
-      deleteBtn = document.getElementsByClassName('delete'),
       ths = Array.prototype.slice.call(document.getElementsByTagName('th')),
       tableData = document.getElementsByTagName('tbody').item(0),
       rowData = tableData.getElementsByTagName('tr'),
@@ -89,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       editInput.value = inputValue;
       curElement.appendChild(editInput);
       editInput.focus();
-    };
+    }
 
   });
 
@@ -98,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     if (curElement.tagName.toLowerCase() === 'th') {
       sortTable(curElement);
-    };
+    }
   });
 
   document.getElementsByTagName('button')[0].addEventListener('click', function(){
